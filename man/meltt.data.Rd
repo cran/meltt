@@ -39,5 +39,8 @@ output <- meltt(crash_data1,crash_data2,crash_data3,
                 taxonomies = crash_taxonomies,twindow = 1,spatwindow = 3)
 dataset <- meltt.data(output,column=c("date","longitude","latitude"))
 head(dataset)
+
+# Return all original columns
+dataset <- meltt.data(output,return_all = T)
 }
 }

@@ -1,8 +1,9 @@
-0ba4fa6974bf6e24611ced2d3722416a *DESCRIPTION
+b405dabef903c645521274cdb40dd86e *DESCRIPTION
 c539d1bdc2e63588e25fa1de58145295 *NAMESPACE
+c3ef3b376ec23957c611d949bf5f39cd *NEWS
 1ada0892b8edc8d55b32191fac8a3d4d *R/is.meltt.R
-ab0184d5218cdee41cdf8cf15968245f *R/meltt.R
-9398b99f03d48a8966a2acb643d26f27 *R/meltt.data.R
+8929b4e28aa1ecc528c74ba7df1348e7 *R/meltt.R
+49cfa8c865b4c23d8dd6d0989edac6c0 *R/meltt.data.R
 67059342339d1360e3bbf71c24bc7c55 *R/meltt.disambiguate.R
 cb483f313887d1f46630e780aaaf8896 *R/meltt.duplicates.R
 a44ebb133b17e784c8a1dc52c837041c *R/meltt.episodal.R
@@ -12,8 +13,9 @@ ea2825223f2b5a3fb276436054bc8951 *R/meltt.match.R
 e0c2e0387cf1643f5aea1c948137340f *R/mplot.R
 cba3db2be97dbb623cb9863c4b90e435 *R/plot.meltt.R
 b1e2a771e1f5e0e518f86f20f67b24fb *R/print.meltt.R
-081a916b0deae299ebdf3f308aaffc61 *R/summary.meltt.R
+3f34af346f8be2aeef40b2eb1eca6c0f *R/summary.meltt.R
 24f55d55eef94fecb5e698267485edff *R/tplot.R
+ea5e01f818b5d0dda8de82f3ea2aa948 *README.md
 7aec4052039b79c3eb45f6c0c821ab75 *data/crashMD.rda
 d90fac8c259bc64875dc6204fadf5481 *inst/python/match.py
 538b8b69dfb86af298a6585dce1a86c9 *man/crash_data1.Rd
@@ -23,7 +25,7 @@ c5c084ba932a8376e74f6206e1a5dfcf *man/crash_taxonomies.Rd
 3a90ffba0d73a5c1b0be6f7532a7fa86 *man/is.meltt.Rd
 f0b3f47e26c8e3456da64ef158a279ec *man/meltt-package.Rd
 622bdb5100a9968ca09c06ac5152cea1 *man/meltt.Rd
-3fb2cfb551f7492a44daff340f4a5eb8 *man/meltt.data.Rd
+35d134ea27b6fa227c41d6a382048f0f *man/meltt.data.Rd
 3c9abe93968f0eeb5220cf5c365abeb7 *man/meltt.disambiguate.Rd
 caf9c6c55fe4e6a66c68f58e9baab36b *man/meltt.duplicates.Rd
 8411e07a8fd7d799d759f9c82d997c96 *man/meltt.episodal.Rd

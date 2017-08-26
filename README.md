@@ -463,4 +463,4 @@ head(output$processed$event_contenders)
 - Please [report any issues or bugs](https://github.com/css-konstanz/meltt/issues).
 - License:  LGPL-3
 - Get citation information for `meltt` in R using `citation(package = 'meltt')`
-- GitHub: https://github.com/css-konstanz/meltt
+- CRAN: https://cran.r-project.org/package=meltt

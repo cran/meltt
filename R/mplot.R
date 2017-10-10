@@ -13,7 +13,8 @@ mplot <- function(object,interactive=FALSE){
   loc$uID = paste0(loc$dataset,"-",loc$event)
 
   # ID Matches and their Duplicates
-  matches = object$processed$event_matched
+  total_n_dats = length(object$inputData)
+  matches = meltt.duplicates(object)[,1:(total_n_dats*2)] 
   cols = (1:ncol(matches))[1:ncol(matches) %% 2 == 1]
   match_id = matrix(nrow=nrow(matches),ncol=length(cols))
   for (c in 1:length(cols)) {
@@ -41,8 +42,9 @@ mplot <- function(object,interactive=FALSE){
   loc2$Event_ID = loc2$uID
   # Establish Color Scheme
   loc2$color=NA;loc2$color[loc2$dataset=="Match"] = "dodgerblue2"
-  set = unique(loc2$dataset)[unique(loc2$dataset)!="Match"]
-  for(s in 1:length(set)){loc2$color[loc2$dataset==set[s]] = colors_pal[s]}
+  colnames(loc2)[colnames(loc2)=="uID"] = "Event_ID"
+  col_selected <- unique(loc2$dataset)[unique(loc2$dataset)!="Match"]
+  for(s in 1:length(col_selected)){loc2$color[loc2$dataset==col_selected[s]] = colors_pal[s]}
 
   # Partialing Data Types
   match_loc = loc2[loc2$dataset=="Match",]
@@ -102,13 +104,19 @@ mplot <- function(object,interactive=FALSE){
     cols <- unique(tt[,c("dataset","color")])
     cols$shape <- 8
     cols[cols=="Match","shape"] <- 18
+    tt$dataset = factor(tt$dataset,levels = c("Match",col_selected))
     map + geom_point(data=tt,
-                     aes(y=jitter(latitude,.2),x=jitter(longitude,.3),group=dataset,
+                     aes(y=jitter(latitude,.2),x=jitter(longitude,.3),
                          color=dataset,
                          shape=dataset),
                      size=3,alpha=1) +
       scale_shape_manual(labels=cols$dataset, values=cols$shape) +
       scale_color_manual(labels=cols$dataset,values = cols$color) +
+      
+      # To make points more prominent
+      geom_point(data=tt[tt$dataset=="Match",],
+                 aes(y=jitter(latitude,.2),x=jitter(longitude,.3)),
+                 size=3.5,shape=18,color="dodgerblue2")+ 
       theme(legend.position="bottom",
             legend.key = element_blank(),
             plot.margin = unit(c(.5,.5,.5,.5), "cm"),

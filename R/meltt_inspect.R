@@ -1,17 +1,20 @@
-meltt.inspect = function(object,columns=NULL,confirmed_matches=NULL){
+meltt_inspect = function(object,columns=NULL,confirmed_matches=NULL){
+  UseMethod("meltt_inspect")
+}
+
+
+meltt_inspect.meltt = function(object,columns=NULL,confirmed_matches=NULL){
 
   # Function to Inspect Flagged Event-to-Episode Detected Matches
 
-  if(!is.meltt(object)) stop("Object is not of class meltt")
-
-  orig_columns = columns
-  dedup = object$processed$deduplicated_index
-  suspects = dedup[dedup$episodal_match != "",]
+  orig_columns <- columns
+  dedup <- object$processed$deduplicated_index
+  suspects <- dedup[dedup$episodal_match != "",]
 
   if(length(columns)==0){
-    columns = c('data.source','dataset','obs.count','date','enddate','latitude','longitude',object$taxonomy$taxonomy_names)
+    columns <- c('data.source','dataset','obs.count','date','enddate','latitude','longitude',object$taxonomy$taxonomy_names)
   }else{
-    columns = unique(c('data.source','dataset','obs.count','date','enddate',columns)) # Return data id and event id
+    columns <- unique(c('data.source','dataset','obs.count','date','enddate',columns)) # Return data id and event id
   }
 
   key = data.frame(dataset = -99,obs.count=-99)
@@ -46,7 +49,7 @@ meltt.inspect = function(object,columns=NULL,confirmed_matches=NULL){
     if(length(confirmed_matches)<length(flagged_entries)){stop("Vector provided to the 'confirmed_matches' argument contains less entries than the number flagged matches")}
 
     keep = flagged_entries[confirmed_matches]
-    unique_entries = meltt.data(object,columns=orig_columns)
+    unique_entries = meltt_data(object,columns=orig_columns)
     for(k in seq_along(keep)){
       remove = keep[[k]][[2]][,c("data.source","obs.count")]
       unique_entries = unique_entries[(unique_entries$dataset != remove[,1]) | (unique_entries$event != remove[,2]),]

@@ -7,8 +7,8 @@ Handling events and episodal data [Auxiliary Function]
 Auxiliary function that receives the compilation matrix and systematically subsets events and episodes to deal with differences in event duration. The function passes subsets to \code{meltt.match}to be processed. Output includes a full list of matching events and/or episodes. 
 }
 \usage{
-meltt.episodal(data,indexing,priormatches,twindow,spatwindow,
-		smartmatch,certainty,k,secondary,partial,averaging,weight)
+meltt.episodal(data, indexing, priormatches, twindow, spatwindow, smartmatch,
+	       certainty, k, secondary, partial, averaging, weight, silent)
 }
 \arguments{
   \item{data}{
@@ -39,7 +39,7 @@ meltt.episodal(data,indexing,priormatches,twindow,spatwindow,
   vector of the number of taxonomy levels for each taxonomy passed from \code{meltt}. 
 }
  \item{partial}{
-  boolean for wether or not partial matches are permitted. Passed from \code{meltt}. 
+  specifies whether matches along less than the full taxonomy dimensions are permitted. Passed from \code{meltt}. 
 }
   \item{averaging}{
   implement averaging of all values events are match on when matching across multiple dataframes. Default = \kbd{FALSE}. 
@@ -47,12 +47,15 @@ meltt.episodal(data,indexing,priormatches,twindow,spatwindow,
   \item{weight}{
   relative weight of each taxonomy in the calculation of the matching score. Passed from \code{meltt}. 
 }
+\item{silent}{
+  Boolean specifying whether or not messages are displayed. Passed from \code{meltt}.
+}
 }
 \details{
 Internal function that helps manage integration of event and episodal data by easing the transition between the two logics. \code{meltt} algorithm tracks event-to-event matches, episode-to-episode, and event-to-episode matches. \code{meltt.episodal} streamlines the transfer between these matching states.
 }
 \references{
-Karsten Donnay, Eric Dunford, Erin C. McGrath, David Backer, David E. Cunningham. (2016). "MELTT: Matching Event Data by Location, Time and Type." Paper presented at \emph{Annual Conference of the Midwest Political Science Association}, April 7-10 2016, Chicago.
+Karsten Donnay, Eric T. Dunford, Erin C. McGrath, David Backer, David E. Cunningham. (2018). "Integrating Conflict Event Data." \emph{Journal of Conflict Resolution}.
 }
 \author{
 Karsten Donnay and Eric Dunford.

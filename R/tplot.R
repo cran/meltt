@@ -1,7 +1,11 @@
-tplot = function(object,time.unit="month"){
-  # Time Series Plot for Meltt Output Data
+tplot = function(object,time_unit="months",free_scale=TRUE){
+  UseMethod('tplot')
+}
 
-  if(!is.meltt(object)) stop("Object is not of class meltt")
+# Variable declaration to satisfy CRAN check
+utils::globalVariables(c("data.source", "status", "n"))
+
+tplot.meltt = function(object,time_unit="months",free_scale=TRUE){
 
   n.datasets = length(object$inputDataNames)
   key = object$processed$deduplicated_index[,c(1,2)]
@@ -20,9 +24,10 @@ tplot = function(object,time.unit="month"){
 
 
   # Break up by specified temporal unit
-  unique_dates$unit <-  as.Date(cut(unique_dates$date,breaks = time.unit,start.on.monday = FALSE))
-  dup_dates$unit <-  as.Date(cut(dup_dates$date,breaks = time.unit,start.on.monday = FALSE))
-  base$unit <-  as.Date(cut(base$date,breaks = time.unit,start.on.monday = FALSE))
+  unique_dates$unit <-  as.Date(cut(unique_dates$date,breaks = time_unit,start.on.monday = FALSE))
+  dup_dates$unit <-  as.Date(cut(dup_dates$date,breaks = time_unit,start.on.monday = FALSE))
+  base$unit <-  as.Date(cut(base$date,breaks = time_unit,start.on.monday = FALSE))
+
   # ensure alignment
   frame = data.frame(unit=unique(base$unit))
   dup_dates = merge(frame,dup_dates,by="unit",all.x=T)
@@ -30,22 +35,34 @@ tplot = function(object,time.unit="month"){
   dup_dates$data.source[is.na(dup_dates$data.source)] = NA
   unique_dates$data.source[is.na(unique_dates$data.source)] = NA
 
-  # ylow = max(table(dup_dates$unit))
-  yhigh = max(table(unique_dates$unit))
-  bp=barplot(table(unique_dates$data.source,unique_dates$unit),
-             col=colors,border="white",
-             ylim=c(-yhigh-round(yhigh*.3),yhigh+round(yhigh*.3)),
-             # ylim=c(-ylow-round(ylow*.3),yhigh+round(yhigh*.3)),
-             xlab=paste0("Date by ",time.unit),ylab="Count",
-             main = "",axisnames=F)
-  barplot(-table(dup_dates$data.source,dup_dates$unit),
-          add=T,border="white",col=alpha(colors[-1],.65),
-          ylab="",axisnames=F)
-  abline(h=0,lwd=2)
-  text(bp[1],yhigh+(yhigh*.15),"Unique",font = 2,cex=.8)
-  text(bp[1],-yhigh-(yhigh*.15),"Duplicates",font = 2,col=alpha("black",.6),cex=.8)
-  # text(bp[1],-ylow-(ylow*.15),"Duplicates",font = 2,col=alpha("black",.6),cex=.8)
-  legend("bottomright",d.sets,fill=colors,
-         cex=.8,pt.cex = .01,ncol=n.datasets,border="white",bty = "n")
-}
+  # gather data
+  dup_dates$status = "Duplicate Entries"
+  unique_dates$status = "Unique Entries"
+  D <-
+    bind_rows(dup_dates,unique_dates) %>%
+    mutate(data.source=factor(data.source,levels=rev(d.sets)),
+           status = factor(status,levels=c("Unique Entries","Duplicate Entries"))) %>%
+    group_by(data.source,unit,status) %>%
+    count() %>%
+    drop_na()
 
+  # plot time series
+  ggplot() +
+    geom_bar(data=D[D$status=="Unique Entries",],
+             aes(x=unit,y=n,fill=data.source),
+             stat="identity") +
+    geom_bar(data=D[D$status=="Duplicate Entries",],
+             aes(x=unit,y=-n,fill=data.source),
+             stat="identity",alpha=.6) +
+    geom_hline(yintercept=0,lwd=1,color="grey30") +
+    {
+      if(free_scale){
+        facet_wrap(~status,scales="free_y",ncol=1,strip.position="right")
+      }
+    } +
+    theme_light() +
+    scale_fill_manual(values = rev(colors)) +
+    labs(y="Count",x=paste0("Date (",time_unit,")"),fill='') +
+    theme(strip.placement = "inside",
+          panel.grid.minor = element_blank())
+}

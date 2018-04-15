@@ -1,9 +1,14 @@
-meltt.match <- function(data,twindow,spatwindow,smartmatch,certainty,k,secondary,partial,weight,episodal){
+meltt.match <- function(data,twindow,spatwindow,smartmatch,certainty,k,secondary,partial,weight,episodal,silent){
+  
   if (smartmatch==TRUE){
+    # set default value
     certainty <- rep(0,k)
+  }else{
+    # certainty entered as levels but zero-based notation in Python
+    certainty <- certainty - 1
   }
   
-  # SORT data by timestamp
+  # SORT by timestamp and remove last columns, if necessary
   data <- data[order(data$date),] 
   row.names(data) <- NULL
   if (is.element("episodal_match",names(data))){
@@ -11,13 +16,9 @@ meltt.match <- function(data,twindow,spatwindow,smartmatch,certainty,k,secondary
   }
   # Read in the script
   # call the main "run" function with its input
-  if (py_module_available("numpy")){
-    colnames <- colnames(data)
-    match <- py_run_file(paste0(find.package("meltt"),"/python/match.py"))
-    output_list <- match$run(data,colnames,twindow,spatwindow,smartmatch,k,secondary,certainty,partial,weight,episodal)
-  }else{
-    stop('Execution of meltt aborted:\n"NumPy" the fundamental package for scientific computing with Python is not installed on your system.\n\n Please install the package for proper functioning of meltt().')
-  }
+  colnames <- colnames(data)
+  match <- py_run_file(paste0(find.package("meltt"),"/python/match.py"))
+  output_list <- match$run(data,colnames,twindow,spatwindow,smartmatch,k,secondary,certainty,partial,weight,episodal,silent)
   
   # turn into data.frames
   if(length(unlist(output_list[1]))==0){

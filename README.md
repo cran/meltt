@@ -34,7 +34,7 @@ Or the development version from Github
 devtools::install_github("kdonnay/meltt")
 ```
 
-The package requires that users have Python (&gt;= 2.7) installed on their computer. To quickly get Python, install an [Anaconda](https://www.anaconda.com/distribution) platform. `meltt` will use the program in the background.
+The package requires that users have Python (&gt;= 2.7) installed on their computer. To quickly get Python, install an [Anaconda](https://www.anaconda.com/products/individual) platform. `meltt` will use the program in the background.
 
 Usage
 =====
@@ -432,4 +432,4 @@ Meta
 -   License: LGPL-3
 -   Get citation information for `meltt` in R using `citation(package = 'meltt')`
 -   CRAN: <https://cran.r-project.org/package=meltt>
--   Check out our article in the [Journal of Conflict Resolution](https://doi.org/10.1177/0022002718777050) for more details on the algorithm, its functionality, and applications to conflict research.
+-   GitHub: <https://github.com/kdonnay/meltt>

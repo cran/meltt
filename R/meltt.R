@@ -5,7 +5,7 @@ meltt <- function(...,taxonomies,twindow,spatwindow,smartmatch=TRUE,certainty=NA
     cat <- function(...){}  
   }
   
-  cat(' meltt: Matching Event Data by Location, Time and Type.\n Karsten Donnay and Eric Dunford, 2018\n\n NOTE: Depending on the size and number of datasets integration may take some time!\n\n\n ')
+  cat(' meltt: Matching Event Data by Location, Time and Type.\n Karsten Donnay and Eric Dunford, 2022\n\n NOTE: Depending on the size and number of datasets integration may take some time!\n\n\n ')
   call <- match.call()
   if (!silent){
     print(call)
@@ -171,7 +171,7 @@ meltt <- function(...,taxonomies,twindow,spatwindow,smartmatch=TRUE,certainty=NA
         terminate <- TRUE
       }
       datecheck <- try(as.Date(date_col, format= "%Y-%m-%d %H:%M:%S"))
-      if (any(class(datecheck) == "try-error" || is.na(datecheck))){
+      if (any(class(datecheck) == "try-error") || sum(is.na(datecheck))>0){
         missing_arguments <- append(missing_arguments,paste0("\n  data: 'date' column in '",as.character(datasets[[dat]]),
                                                              "' must be formatted as 'YYYY-MM-DD hh:mm:ss'\n"))
         terminate <- TRUE

@@ -7,6 +7,11 @@ meltt_validate = function(
   temporal_window = NULL, # if within_window==F, set new t window
   reset = FALSE # If TRUE, the validation step will be reset and a new validation sample frame will be produced.
 ){
+  # INPUT CHECK
+  if(!is(object,"meltt")){
+    stop("input 'object' must be of type 'meltt', i.e. the output object returned by function meltt()")
+  }
+  
   UseMethod("meltt_validate")
 }
 
@@ -32,7 +37,7 @@ meltt_validate.meltt = function(
     stop("'within_window' has been set to FALSE, user must provide a new temporal and spatial window from which to draw control group.")
   }
   if(sample_prop > 1 | sample_prop < 0.001){
-    stop("`sample_prop` exceeds relevant bounds. Set argument to any numeric value existing between .01 and 1")
+    stop("'sample_prop' exceeds relevant bounds. Set argument to any numeric value existing between .01 and 1")
   }
 
   # BULID VALIDATION SET (if need be) ------------------------------------------------------------------
@@ -183,7 +188,7 @@ meltt_validate.meltt = function(
         }
         cbind(type=names(x),y)
       })
-    entries_info <- as.tibble(ldply(entries_info))
+    entries_info <- as_tibble(ldply(entries_info))
 
     formatted <- apply(entries_info[,(1:2)*-1],1,function(x){
       x = iconv(x, "latin1", "ASCII", sub="") # Remove any potential encoding issues
@@ -296,7 +301,7 @@ meltt_validate.meltt = function(
       fluidRow(
         column(12,align='center',
                actionButton("quit", "End Review",
-                            icon = icon("circle-o-notch"),
+                            icon = icon("circle-notch"),
                             style="color: #ffffff; background-color:#444242;padding:20px; font-size:100%",
                             onclick = "setTimeout(function(){window.close();},500);")
         )

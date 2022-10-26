@@ -14,7 +14,7 @@ In many cases, more than one event dataset exists capturing related topics -- su
 
 In the past, to overcome these hurdles, researchers have typically relied on hand-coding to systematically match these data, which needless to say, is extremely time consuming, error-prone, and hard to reproduce. `meltt` provides a way around this problem by implementing a method that automates the matching of different event datasets in a fast, transparent, and reproducible way.
 
-More information about the specifics of the method can also be found in an upcoming article in the *Journal of Conflict Resolution* as well as in the package documentation.
+More information about the specifics of the method can also be found in our article in the *Journal of Conflict Resolution* as well as in the package documentation.
 
 Installation
 ============
@@ -34,7 +34,7 @@ Or the development version from Github
 devtools::install_github("kdonnay/meltt")
 ```
 
-The package requires that users have Python (&gt;= 2.7) installed on their computer. To quickly get Python, install an [Anaconda](https://www.anaconda.com/products/individual) platform. `meltt` will use the program in the background.
+The package requires that users have Python (&gt;= 3.6) installed on their computer. To quickly get Python, install an [Anaconda](https://www.anaconda.com/products/distribution) platform. `meltt` will use the program in the background.
 
 Usage
 =====
